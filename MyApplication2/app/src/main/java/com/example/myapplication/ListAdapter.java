@@ -16,7 +16,7 @@ public class ListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private int layoutId;
-    private ArrayList<ListItem> items;
+    private ArrayList<ListItemEntity> items;
 
     static class ViewHolder{
         TextView date;
@@ -24,7 +24,7 @@ public class ListAdapter extends BaseAdapter {
         TextView detail;
     }
 
-    ListAdapter(Context context, int itemLayoutId, ArrayList<ListItem> argItems){
+    ListAdapter(Context context, int itemLayoutId, ArrayList<ListItemEntity> argItems){
         super();
         this.inflater = LayoutInflater.from(context);
         this.layoutId = itemLayoutId;
@@ -61,7 +61,7 @@ public class ListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         // 内部のリストからposition番目の要素を取得
-        ListItem item = this.items.get(position);
+        ListItemEntity item = this.items.get(position);
         //ViewHolderに値をセットする
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd HH:mm:ss");
         holder.date.setText(dateFormat.format(item.getDate()));

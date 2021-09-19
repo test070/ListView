@@ -15,7 +15,7 @@ import static java.lang.Boolean.TRUE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<ListItem> items= new ArrayList<>();
+    private ArrayList<ListItemEntity> items= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             Date dateVal = new Date();
             String titleText = "予定　" + Integer.valueOf(i).toString();
             String detailText = "詳細　" + Integer.valueOf(i).toString();
-            ListItem item = new ListItem(dateVal, titleText, detailText);
+            ListItemEntity item = new ListItemEntity(dateVal, titleText, detailText);
             items.add(item);
         }
 

@@ -2,12 +2,12 @@ package com.example.myapplication;
 
 import java.util.Date;
 
-public class ListItem {
+public class ListItemEntity {
     private Date date;
     private String title;
     private String detail;
 
-    ListItem(Date argDate, String argtitle, String argDetail){
+    ListItemEntity(Date argDate, String argtitle, String argDetail){
         date = argDate;
         title = argtitle;
         detail = argDetail;
