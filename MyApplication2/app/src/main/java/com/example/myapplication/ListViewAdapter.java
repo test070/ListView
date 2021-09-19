@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ListAdapter extends BaseAdapter {
+public class ListViewAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private int layoutId;
@@ -24,7 +24,7 @@ public class ListAdapter extends BaseAdapter {
         TextView detail;
     }
 
-    ListAdapter(Context context, int itemLayoutId, ArrayList<ListItemEntity> argItems){
+    ListViewAdapter(Context context, int itemLayoutId, ArrayList<ListItemEntity> argItems){
         super();
         this.inflater = LayoutInflater.from(context);
         this.layoutId = itemLayoutId;

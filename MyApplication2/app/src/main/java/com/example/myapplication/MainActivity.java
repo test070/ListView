@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         // ListViewのインスタンスを生成
         ListView listView = findViewById(R.id.list_view);
 
-        final BaseAdapter adapter = new ListAdapter(this.getApplicationContext(), R.layout.list_item, items);
+        final BaseAdapter adapter = new ListViewAdapter(this.getApplicationContext(), R.layout.list_item, items);
 
         //アダプターを追加して、リストビューに要素を追加、表示させる
         listView.setAdapter(adapter);
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //クリックした要素をitemsから取得する
                         ListItemEntity item = items.get(position);
                         Toast.makeText(MainActivity.this,item.getTitle(), Toast.LENGTH_SHORT).show();
                     }
