@@ -66,7 +66,7 @@ public class ListViewAdapter extends BaseAdapter {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd HH:mm:ss");
         holder.date.setText(dateFormat.format(item.getDate()));
         holder.title.setText(item.getTitle());
-        holder.detail.setText(item.getDetail());
+        holder.detail.setText(item.getContents());
         return convertView;
     }
 }

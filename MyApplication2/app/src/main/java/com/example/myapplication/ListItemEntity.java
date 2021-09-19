@@ -5,12 +5,12 @@ import java.util.Date;
 public class ListItemEntity {
     private Date date;
     private String title;
-    private String detail;
+    private String contents;
 
-    ListItemEntity(Date argDate, String argtitle, String argDetail){
+    ListItemEntity(Date argDate, String argtitle, String argContents){
         date = argDate;
         title = argtitle;
-        detail = argDetail;
+        contents = argContents;
     }
 
     public void setDate(Date date) {
@@ -29,11 +29,11 @@ public class ListItemEntity {
         return title;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
-    public String getDetail() {
-        return detail;
+    public String getContents() {
+        return contents;
     }
 }
