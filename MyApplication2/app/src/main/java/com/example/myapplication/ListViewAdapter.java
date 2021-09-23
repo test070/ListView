@@ -21,7 +21,7 @@ public class ListViewAdapter extends BaseAdapter {
     static class ViewHolder{
         TextView date;
         TextView title;
-        TextView detail;
+        TextView contents;
     }
 
     ListViewAdapter(Context context, int itemLayoutId, ArrayList<ListItemEntity> argItems){
@@ -55,7 +55,7 @@ public class ListViewAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.date = convertView.findViewById(R.id.textDate);
             holder.title = convertView.findViewById(R.id.textTitle);
-            holder.detail = convertView.findViewById(R.id.textDetail);
+            holder.contents = convertView.findViewById(R.id.textContents);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -66,7 +66,7 @@ public class ListViewAdapter extends BaseAdapter {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd HH:mm:ss");
         holder.date.setText(dateFormat.format(item.getDate()));
         holder.title.setText(item.getTitle());
-        holder.detail.setText(item.getContents());
+        holder.contents.setText(item.getContents());
         return convertView;
     }
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:ignore="MissingDefaultResource">
 
 
@@ -22,11 +23,11 @@
         android:text="Title" />
 
     <TextView
-        android:id="@+id/textDetail"
+        android:id="@+id/textContents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Detail" />
+        android:text="Contents" />
 
 <!--    <Switch-->
 <!--        android:id="@+id/switch1"-->
