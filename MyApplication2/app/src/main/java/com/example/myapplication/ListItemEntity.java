@@ -1,8 +1,9 @@
 package com.example.myapplication;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ListItemEntity {
+public class ListItemEntity implements Serializable {
     private Date date;
     private String title;
     private String contents;

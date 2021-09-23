@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +19,9 @@ import static java.lang.Boolean.TRUE;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String EXTRA_DATA
+            = "com.example.DATA";
+    private static final int REQUEST_CODE = 1;
     private ArrayList<ListItemEntity> items= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,19 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //クリックした要素をitemsから取得する
                         ListItemEntity item = items.get(position);
-                        Toast.makeText(MainActivity.this,item.getTitle(), Toast.LENGTH_SHORT).show();
+                        //InputActivityのインテントを生成して画面遷移
+                        Intent intent = new Intent(MainActivity.this, InputActivity.class);
+                        intent.putExtra(EXTRA_DATA, item);
+                        startActivity(intent);
+//                        startActivityForResult(intent, REQUEST_CODE);
+
                     }
                 }
         );
     }
+
+//    protected void onActivityResult( int requestCode, int resultCode, Intent intent) {
+//        super.onActivityResult(requestCode, resultCode, intent);
+//　　　// 受け取るためのコード
+//    }
 }
