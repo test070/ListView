@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class InputActivity extends AppCompatActivity {
 
     @Override
@@ -19,7 +22,8 @@ public class InputActivity extends AppCompatActivity {
         TextView inputTitle = findViewById(R.id.editTextInputTitle);
         inputTitle.setText(item.getTitle());
         TextView inputDate = findViewById(R.id.editTextInputDate);
-//        inputDate.setText(item.getDate());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd HH:mm:ss");
+        inputDate.setText(dateFormat.format(item.getDate()));
         TextView inputContents = findViewById(R.id.editTextInputContents);
         inputContents.setText(item.getContents());
 
