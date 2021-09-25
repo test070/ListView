@@ -7,6 +7,7 @@ public class ListItemEntity implements Serializable {
     private Date date;
     private String title;
     private String contents;
+    private int index;
 
     ListItemEntity(Date argDate, String argtitle, String argContents){
         date = argDate;
@@ -36,5 +37,13 @@ public class ListItemEntity implements Serializable {
 
     public String getContents() {
         return contents;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
