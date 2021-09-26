@@ -11,7 +11,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
             = "com.example.DATA";
     public static final String RETURN_DATA
             = "com.example.RETURN_DATA";
+    public static final int ADD_ITEM_INDEX = -1;//新規追加の場合のインデックス
     private final ArrayList<ListItemEntity> items= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             Date dateVal = new Date();
             String titleText = "予定　" + Integer.valueOf(i).toString();
             String detailText = "詳細　" + Integer.valueOf(i).toString();
-            ListItemEntity item = new ListItemEntity(dateVal, titleText, detailText);
+            ListItemEntity item = new ListItemEntity(i, dateVal, titleText, detailText);
             items.add(item);
         }
 
@@ -61,6 +65,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        FloatingActionButton fab = findViewById(R.id.fabAddListItem);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //新しいリスト要素を作成
+                ListItemEntity item = new ListItemEntity(ADD_ITEM_INDEX, new Date(), "","");
+                //InputActivityのインテントを生成
+                Intent intent = new Intent(MainActivity.this, InputActivity.class);
+                intent.putExtra(EXTRA_DATA, item);
+                //インテントで画面遷移
+                launcher.launch(intent);
+            }
+        });
     }
 
     //画面遷移の処理
@@ -73,7 +91,13 @@ public class MainActivity extends AppCompatActivity {
                         Intent      resultData = result.getData();
                         if (resultData != null) {
                             ListItemEntity item = (ListItemEntity)resultData.getSerializableExtra(MainActivity.RETURN_DATA);
-                            items.set(item.getIndex(), item);
+                            if(item.getIndex() == ADD_ITEM_INDEX){
+                                //新規追加の場合
+                                items.add(item);
+                            }else{
+                                //情報更新の場合
+                                items.set(item.getIndex(), item);
+                            }
 
                             // ListViewのインスタンスを生成
                             ListView listView = findViewById(R.id.list_view);

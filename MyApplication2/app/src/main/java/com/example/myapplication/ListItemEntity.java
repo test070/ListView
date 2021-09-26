@@ -9,7 +9,8 @@ public class ListItemEntity implements Serializable {
     private String contents;
     private int index;
 
-    ListItemEntity(Date argDate, String argtitle, String argContents){
+    ListItemEntity(int argIndex, Date argDate, String argtitle, String argContents){
+        index = argIndex;
         date = argDate;
         title = argtitle;
         contents = argContents;

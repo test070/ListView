@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class InputActivity extends AppCompatActivity {
+    int index = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,7 @@ public class InputActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         ListItemEntity item = (ListItemEntity)intent.getSerializableExtra(MainActivity.EXTRA_DATA);
+        index = item.getIndex();
 
         inputTitle.setText(item.getTitle());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd HH:mm:ss");
@@ -50,7 +52,7 @@ public class InputActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                ListItemEntity retItem = new ListItemEntity(date, inputTitle.getText().toString(), inputContents.getText().toString());
+                ListItemEntity retItem = new ListItemEntity(index, date, inputTitle.getText().toString(), inputContents.getText().toString());
                 //ListItemEntityデータをインテントにセット
                 Intent retIntent = getIntent();
                 retIntent.putExtra(MainActivity.RETURN_DATA, retItem);
