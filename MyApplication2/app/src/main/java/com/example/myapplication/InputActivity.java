@@ -33,9 +33,10 @@ public class InputActivity extends AppCompatActivity {
         inputDate.setText(dateFormat.format(item.getDate()));
         inputContents.setText(item.getContents());
 
+        //保存ボタンのアクション設定
         Button btnExecution = findViewById(R.id.buttonExecution);
         btnExecution.setOnClickListener(new View.OnClickListener() {
-            @Override
+            @Override //保存ボタン押下処理
             public void onClick(View v) {
                 //テキストエリアのインスタンスを取得
                 TextView inputTitle1 = findViewById(R.id.editTextInputTitle);
@@ -59,9 +60,10 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
+        //キャンセルボタンのアクション設定
         Button btnCancel = findViewById(R.id.buttonCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
+            @Override //キャンセルボタン押下処理
             public void onClick(View v) {
                 finish();
             }
