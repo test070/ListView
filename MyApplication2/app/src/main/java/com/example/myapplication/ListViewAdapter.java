@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class ListViewAdapter extends BaseAdapter {
 
@@ -63,7 +64,7 @@ public class ListViewAdapter extends BaseAdapter {
         // 内部のリストからposition番目の要素を取得
         ListItemEntity item = this.items.get(position);
         //ViewHolderに値をセットする
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN);
         holder.date.setText(dateFormat.format(item.getDate()));
         holder.title.setText(item.getTitle());
         holder.contents.setText(item.getContents());
