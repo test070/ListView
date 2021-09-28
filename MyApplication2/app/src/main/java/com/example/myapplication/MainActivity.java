@@ -25,35 +25,24 @@ public class MainActivity extends AppCompatActivity {
     public static final String RETURN_DATA
             = "com.example.RETURN_DATA";
     public static final int ADD_ITEM_INDEX = -1;//新規追加の場合のインデックス
-    private final ArrayList<ListItemEntity> items= new ArrayList<>();
+    private final DBAccess dbAccess= new DBAccess();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //リストを作成
-        for(int i=0; i<5; i++){
-            Date dateVal = new Date();
-            String titleText = "予定　" + Integer.valueOf(i).toString();
-            String detailText = "詳細　" + Integer.valueOf(i).toString();
-            ListItemEntity item = new ListItemEntity(i, dateVal, titleText, detailText);
-            items.add(item);
-        }
-
         // ListViewのインスタンスを生成
         ListView listView = findViewById(R.id.list_view);
-        //アダプターのインスタンスを生成
-        final BaseAdapter adapter = new ListViewAdapter(this.getApplicationContext(), R.layout.list_item, items);
-        //アダプターを追加して、リストビューに要素を追加、表示させる
-        listView.setAdapter(adapter);
+        //ListViewにItemを詰める
+        updateListView(listView, dbAccess.getList());
 
-        //クリック処理
+        //ListViewクリック処理
         listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //クリックした要素をitemsから取得する
-                        ListItemEntity item = items.get(position);
+                        ListItemEntity item = dbAccess.getItemByIndex(position);
                         item.setIndex(position);
                         //InputActivityのインテントを生成
                         Intent intent = new Intent(MainActivity.this, InputActivity.class);
@@ -65,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        //追加ボタン処理
         FloatingActionButton fab = findViewById(R.id.fabAddListItem);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,22 +82,27 @@ public class MainActivity extends AppCompatActivity {
                             ListItemEntity item = (ListItemEntity)resultData.getSerializableExtra(MainActivity.RETURN_DATA);
                             if(item.getIndex() == ADD_ITEM_INDEX){
                                 //新規追加の場合
-                                items.add(item);
+                                dbAccess.addListItem(item);
                             }else{
                                 //情報更新の場合
-                                items.set(item.getIndex(), item);
+                                dbAccess.updateListItem(item.getIndex(), item);
                             }
 
-                            // ListViewのインスタンスを生成
+                            //ListViewのインスタンスを生成
                             ListView listView = findViewById(R.id.list_view);
-                            //アダプターのインスタンスを生成
-                            final BaseAdapter adapter = new ListViewAdapter(MainActivity.this.getApplicationContext(), R.layout.list_item, items);
-                            //アダプターを追加して、リストビューに要素を追加、表示させる
-                            listView.setAdapter(adapter);
-
+                            //ListView更新
+                            updateListView(listView, dbAccess.getList());
                         }
                     }
                 }
             }
     );
+
+    //ListViewの情報を更新する
+    private void updateListView(ListView listView, ArrayList<ListItemEntity> items){
+        //アダプターのインスタンスを生成
+        final BaseAdapter adapter = new ListViewAdapter(MainActivity.this.getApplicationContext(), R.layout.list_item, items);
+        //アダプターを追加して、リストビューに要素を追加、表示させる
+        listView.setAdapter(adapter);
+    }
 }

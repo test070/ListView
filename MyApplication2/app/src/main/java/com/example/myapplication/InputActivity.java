@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,20 +21,24 @@ import java.util.Locale;
 
 public class InputActivity extends AppCompatActivity {
     int index = 0;
+    EditText inputTitle = null;
+    EditText inputDate = null;
+    EditText inputContents = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
 
-        //テキストエリアのインスタンスを取得
-        EditText inputTitle = findViewById(R.id.editTextInputTitle);
-        EditText inputDate = findViewById(R.id.editTextInputDate);
-        EditText inputContents = findViewById(R.id.editTextInputContents);
-
+        //MainActivityから渡されたインテントを取得
         Intent intent = getIntent();
         ListItemEntity item = (ListItemEntity)intent.getSerializableExtra(MainActivity.EXTRA_DATA);
         index = item.getIndex();
 
+        //テキストエリアのインスタンスを取得
+        inputTitle = findViewById(R.id.editTextInputTitle);
+        inputDate = findViewById(R.id.editTextInputDate);
+        inputContents = findViewById(R.id.editTextInputContents);
+        //テキストエリアに情報セット
         inputTitle.setText(item.getTitle());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN);
         inputDate.setText(dateFormat.format(item.getDate()));
@@ -47,23 +49,18 @@ public class InputActivity extends AppCompatActivity {
         btnExecution.setOnClickListener(new View.OnClickListener() {
             @Override //保存ボタン押下処理
             public void onClick(View v) {
-                //テキストエリアのインスタンスを取得
-                EditText inputTitle1 = findViewById(R.id.editTextInputTitle);
-                EditText inputDate1 = findViewById(R.id.editTextInputDate);
-                EditText inputContents1 = findViewById(R.id.editTextInputContents);
                 //戻り値用のListItemEntityデータを作成
-                String str = inputDate.getText().toString();
                 Date date = null;
                 try {
                     date = new SimpleDateFormat("yyyy/MM/dd").parse(inputDate.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                ListItemEntity retItem = new ListItemEntity(index, date, inputTitle.getText().toString(), inputContents.getText().toString());
+                ListItemEntity item = new ListItemEntity(index, date, inputTitle.getText().toString(), inputContents.getText().toString());
                 //ListItemEntityデータをインテントにセット
                 Intent retIntent = getIntent();
-                retIntent.putExtra(MainActivity.RETURN_DATA, retItem);
-                //戻る
+                retIntent.putExtra(MainActivity.RETURN_DATA, item);
+                //MainActivityに戻る
                 setResult(RESULT_OK, retIntent);
                 finish();
             }

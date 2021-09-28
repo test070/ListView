@@ -21,10 +21,6 @@ public class DBAccess {
         return items;
     }
 
-    public int getListSize() {
-        return items.size();
-    }
-
     public ListItemEntity getItemByIndex(int index){
         return items.get(index);
     }
