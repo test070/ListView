@@ -12,7 +12,7 @@ public class DBAccess {
             Date dateVal = new Date();
             String titleText = "予定　" + Integer.valueOf(i).toString();
             String detailText = "詳細　" + Integer.valueOf(i).toString();
-            ListItemEntity item = new ListItemEntity(i, dateVal, titleText, detailText);
+            ListItemEntity item = new ListItemEntity( "", dateVal, titleText, detailText);
             items.add(item);
         }
     }

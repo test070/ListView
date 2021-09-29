@@ -7,10 +7,10 @@ public class ListItemEntity implements Serializable {
     private Date date;
     private String title;
     private String contents;
-    private int index;
+    private String dbActionFlag;
 
-    ListItemEntity(int argIndex, Date argDate, String argtitle, String argContents){
-        index = argIndex;
+    ListItemEntity(String argDBActionFlag, Date argDate, String argtitle, String argContents){
+        dbActionFlag = argDBActionFlag;
         date = argDate;
         title = argtitle;
         contents = argContents;
@@ -40,11 +40,11 @@ public class ListItemEntity implements Serializable {
         return contents;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setDbActionFlag(String dbActionFlag) {
+        this.dbActionFlag = dbActionFlag;
     }
 
-    public int getIndex() {
-        return index;
+    public String getDbActionFlag() {
+        return dbActionFlag;
     }
 }

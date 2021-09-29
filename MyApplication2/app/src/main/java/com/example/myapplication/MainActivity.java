@@ -24,8 +24,11 @@ public class MainActivity extends AppCompatActivity {
             = "com.example.DATA";
     public static final String RETURN_DATA
             = "com.example.RETURN_DATA";
-    public static final int ADD_ITEM_INDEX = -1;//新規追加の場合のインデックス
-    public static final String REMOVE_FLAG = "com.example.REMOVE_FLAG";//削除の場合のインデックス
+    public static final String INDEX_NUMBER
+            = "com.example.INDEX_NUMBER";
+    public static final String ADD_ITEM_FLAG = "com.example.ADD_FLAG";//新規追加の場合のインデックス
+    public static final String REMOVE_ITEM_FLAG = "com.example.REMOVE_FLAG";//削除の場合のインデックス
+    public static final int ERROR_NUMBER = -11111;
     private final DBAccess dbAccess= new DBAccess();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //クリックした要素をitemsから取得する
                         ListItemEntity item = dbAccess.getItemByIndex(position);
-                        item.setIndex(position);
                         //InputActivityのインテントを生成
                         Intent intent = new Intent(MainActivity.this, InputActivity.class);
+                        intent.putExtra(INDEX_NUMBER, position);
                         intent.putExtra(EXTRA_DATA, item);
                         //インテントで画面遷移
                         launcher.launch(intent);
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //新しいリスト要素を作成
-                ListItemEntity item = new ListItemEntity(ADD_ITEM_INDEX, new Date(), "","");
+                ListItemEntity item = new ListItemEntity(ADD_ITEM_FLAG, new Date(), "","");
                 //InputActivityのインテントを生成
                 Intent intent = new Intent(MainActivity.this, InputActivity.class);
                 intent.putExtra(EXTRA_DATA, item);
@@ -80,16 +83,17 @@ public class MainActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent      resultData = result.getData();
                         if (resultData != null) {
-                            ListItemEntity item = (ListItemEntity)resultData.getSerializableExtra(MainActivity.RETURN_DATA);
-                            if(item.getIndex() == ADD_ITEM_INDEX){
+                            int index = resultData.getIntExtra(INDEX_NUMBER, ERROR_NUMBER);
+                            ListItemEntity item = (ListItemEntity)resultData.getSerializableExtra(RETURN_DATA);
+                            if(item.getDbActionFlag().equals(ADD_ITEM_FLAG) && item != null){
                                 //新規追加の場合
                                 dbAccess.addListItem(item);
-                            }else if(item.getContents().equals(REMOVE_FLAG)){
+                            }else if(item.getDbActionFlag().equals(REMOVE_ITEM_FLAG) && index != ERROR_NUMBER){
                                 //削除の場合
-                                dbAccess.removeListItem(item.getIndex());
-                            }else{
+                                dbAccess.removeListItem(index);
+                            }else if(item != null && index != ERROR_NUMBER){
                                 //情報更新の場合
-                                dbAccess.updateListItem(item.getIndex(), item);
+                                dbAccess.updateListItem(index, item);
                             }
 
                             //ListViewのインスタンスを生成

@@ -21,6 +21,7 @@ import java.util.Locale;
 
 public class InputActivity extends AppCompatActivity {
     int index = 0;
+    ListItemEntity item = null;
     EditText inputTitle = null;
     EditText inputDate = null;
     EditText inputContents = null;
@@ -31,14 +32,15 @@ public class InputActivity extends AppCompatActivity {
 
         //MainActivityから渡されたインテントを取得
         Intent intent = getIntent();
-        ListItemEntity item = (ListItemEntity)intent.getSerializableExtra(MainActivity.EXTRA_DATA);
-        index = item.getIndex();
+        item = (ListItemEntity)intent.getSerializableExtra(MainActivity.EXTRA_DATA);
+        index = intent.getIntExtra(MainActivity.INDEX_NUMBER, -111);
 
         //テキストエリアのインスタンスを取得
         inputTitle = findViewById(R.id.editTextInputTitle);
         inputDate = findViewById(R.id.editTextInputDate);
         inputContents = findViewById(R.id.editTextInputContents);
-        //テキストエリアに情報セット
+
+        //入力画面のテキストエリアに情報セット
         inputTitle.setText(item.getTitle());
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN);
         inputDate.setText(dateFormat.format(item.getDate()));
@@ -49,14 +51,14 @@ public class InputActivity extends AppCompatActivity {
         btnExecution.setOnClickListener(new View.OnClickListener() {
             @Override //保存ボタン押下処理
             public void onClick(View v) {
-                //戻り値用のListItemEntityデータを作成
-                Date date = null;
+                //戻り値用のListItemEntityにデータを追加
                 try {
-                    date = new SimpleDateFormat("yyyy/MM/dd").parse(inputDate.getText().toString());
+                    item.setDate(new SimpleDateFormat("yyyy/MM/dd").parse(inputDate.getText().toString()));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                ListItemEntity item = new ListItemEntity(index, date, inputTitle.getText().toString(), inputContents.getText().toString());
+                item.setTitle(inputTitle.getText().toString());
+                item.setContents(inputContents.getText().toString());
                 //ListItemEntityデータをインテントにセット
                 Intent intent = getIntent();
                 intent.putExtra(MainActivity.RETURN_DATA, item);
@@ -71,7 +73,8 @@ public class InputActivity extends AppCompatActivity {
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListItemEntity item = new ListItemEntity(index, null, "", MainActivity.REMOVE_FLAG);
+                //戻り値用のListItemEntityに削除フラグを追加
+                item.setDbActionFlag(MainActivity.REMOVE_ITEM_FLAG);
                 //ListItemEntityデータをインテントにセット
                 Intent intent = getIntent();
                 intent.putExtra(MainActivity.RETURN_DATA, item);
