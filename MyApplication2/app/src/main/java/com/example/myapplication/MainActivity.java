@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String RETURN_DATA
             = "com.example.RETURN_DATA";
     public static final int ADD_ITEM_INDEX = -1;//新規追加の場合のインデックス
+    public static final String REMOVE_FLAG = "com.example.REMOVE_FLAG";//削除の場合のインデックス
     private final DBAccess dbAccess= new DBAccess();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
                             if(item.getIndex() == ADD_ITEM_INDEX){
                                 //新規追加の場合
                                 dbAccess.addListItem(item);
+                            }else if(item.getContents().equals(REMOVE_FLAG)){
+                                //削除の場合
+                                dbAccess.removeListItem(item.getIndex());
                             }else{
                                 //情報更新の場合
                                 dbAccess.updateListItem(item.getIndex(), item);

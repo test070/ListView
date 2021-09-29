@@ -58,10 +58,25 @@ public class InputActivity extends AppCompatActivity {
                 }
                 ListItemEntity item = new ListItemEntity(index, date, inputTitle.getText().toString(), inputContents.getText().toString());
                 //ListItemEntityデータをインテントにセット
-                Intent retIntent = getIntent();
-                retIntent.putExtra(MainActivity.RETURN_DATA, item);
+                Intent intent = getIntent();
+                intent.putExtra(MainActivity.RETURN_DATA, item);
                 //MainActivityに戻る
-                setResult(RESULT_OK, retIntent);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+        //削除ボタンのアクション設定
+        Button btnRemove = findViewById(R.id.buttonRemove);
+        btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListItemEntity item = new ListItemEntity(index, null, "", MainActivity.REMOVE_FLAG);
+                //ListItemEntityデータをインテントにセット
+                Intent intent = getIntent();
+                intent.putExtra(MainActivity.RETURN_DATA, item);
+                //MainActivityに戻る
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
